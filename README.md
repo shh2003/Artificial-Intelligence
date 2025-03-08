@@ -1,2 +1,2 @@
 # AI (artificial-intelligence)
-인공지능 개론 과제 정리
+인공지능 개론 실습문제 정리
