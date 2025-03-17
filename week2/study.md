@@ -23,3 +23,17 @@ X_test = scaler.transform(X_test)
   - 데이터셋의 feature(변수)들이 서로 다른 단위를 가지고 있을 수 있음.
     따라서 거리 기반 모델(예: KNN, SVM, 선형회귀 등)은 큰 값 범위를 가진 변수에 더 큰 가중치를 부여하게 됨.
     -> 표준화는 모든 feature를 평균 0, 표준편차 1로 변환하여 동일한 스케일로 맞춤.
+
+---
+## 혼동 행렬(confusion matrix)이란?
+|                      | **실제 Positive (1)** | **실제 Negative (0)** |
+|----------------------|-----------------------|-----------------------|
+| **예측 Positive (1)** | True Positive (TP)    | False Positive (FP)   |
+| **예측 Negative (0)** | False Negative (FN)   | True Negative (TN)    |
+
+의미
+TP (True Positive): 실제 1인데 모델도 1이라고 맞춤
+TN (True Negative): 실제 0인데 모델도 0이라고 맞춤
+FP (False Positive): 실제는 0인데 모델이 1이라고 틀림 (False Alarm)
+FN (False Negative): 실제는 1인데 모델이 0이라고 틀림 (놓침)
+
