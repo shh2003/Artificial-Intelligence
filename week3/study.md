@@ -8,3 +8,7 @@ df.columns = ['buying', 'maint', 'doors', 'persons', 'lug_boot', 'safety', 'clas
 df
 ```
 넘파이 (배열) 데이터프레임(표)
+분류(이산적) 회귀(연속적)
+이산적 데이터를 분류할때 one-hot-enconding(이산적 데이터의 연관성을 없애기)
+
+
