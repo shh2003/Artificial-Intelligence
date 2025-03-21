@@ -57,7 +57,8 @@ header=None 컬럼명 데이터가 필요없을떄
 - **LabelEncoder**: "1, 2, 3처럼 번호를 매김"  
 - **One-Hot**: "0/1로 나누어 독립적인 컬럼으로 만듦"
 
----<br><br><br><br>
+---
+<br><br><br><br>
 
 # 🧹 데이터 전처리 체크리스트
 ## 🔍 1단계: 결측치 처리 (Missing Values)
