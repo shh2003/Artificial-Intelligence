@@ -21,13 +21,7 @@ header=None 컬럼명 데이터가 필요없을떄
 ### ✨ 쉽게 기억하는 팁:
 - **넘파이 배열**: "숫자 계산에 특화된 n차원 배열"  
 - **데이터프레임**: "엑셀처럼 컬럼명과 인덱스를 가진 표 형태 데이터"
-
-
----
-<br>
-
-
-
+---<br><br><br><br>
 
 ## 📌 분류 vs 회귀
 
@@ -43,15 +37,7 @@ header=None 컬럼명 데이터가 필요없을떄
 ### ✨ 쉽게 기억하는 팁:
 - **분류**: "어느 그룹이야?"  
 - **회귀**: "얼마야?"
-
-
-
----
-
-
-
-
-
+---<br><br><br><br>
 
 
 ## 🔄 LabelEncoder vs One-Hot Encoding
@@ -70,7 +56,96 @@ header=None 컬럼명 데이터가 필요없을떄
 - **LabelEncoder**: "1, 2, 3처럼 번호를 매김"  
 - **One-Hot**: "0/1로 나누어 독립적인 컬럼으로 만듦"
 
+---<br><br><br><br>
+
+# 🧹 데이터 전처리 체크리스트
+## 🔍 1단계: 결측치 처리 (Missing Values)
+
+### ☐ 결측치 확인
+```python
+df.isnull().sum()
+```
+
+### ☐ 결측치 처리 전략
+- ☐ **평균/중앙값/최빈값 대체 (SimpleImputer)**
+- ☐ **특정 값으로 채우기 (ex: 0 또는 'Unknown')**
+- ☐ **행 제거 (dropna)**
+
+```python
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(strategy='mean')  # 또는 median, most_frequent
+df[cols] = imputer.fit_transform(df[cols])
+```
+
 ---
+
+## 🔍 2단계: 이상치 처리 (Outliers)
+
+### ☐ IQR 또는 Z-score를 이용한 이상치 탐지
+```python
+import scipy.stats as stats
+
+z_scores = stats.zscore(df)
+print((abs(z_scores) > 3).sum())
+```
+
+### ☐ 이상치 처리 전략
+- ☐ **제거 (drop)**
+- ☐ **클리핑 (clip)**
+- ☐ **값 대체 (ex: 상한/하한 값으로 대체)**
+
+---
+
+## 🔍 3단계: 데이터 스케일링 (Scaling)
+
+### ☐ 스케일링 필요 여부 판단
+- ☐ 모델이 거리 기반인지 확인 (ex: KNN, SVM, 선형모델 등은 필요)
+
+### ☐ 스케일링 적용
+```python
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+```
+
+---
+
+## 🔍 4단계: 인코딩 (Categorical Encoding)
+
+### ☐ 범주형 변수 확인
+```python
+df.select_dtypes(include='object').columns
+```
+
+### ☐ 인코딩 적용
+- ☐ **One-Hot Encoding**
+- ☐ **Label Encoding**
+- ☐ **Target Encoding** (필요 시)
+
+```python
+pd.get_dummies(df, columns=['col_name'])
+```
+
+---
+
+## 🔍 5단계: 불필요한 컬럼 제거
+- ☐ 식별자 컬럼(ID 등) 삭제
+- ☐ 타겟 변수 관련 컬럼 삭제 (데이터 누수 방지)
+```python
+df = df.drop(columns=['ID', 'Outcome'])
+```
+
+---
+
+## ✨ 6단계: 최종 확인
+- ☐ 데이터셋 shape 확인 (`df.shape`)
+- ☐ 데이터 타입 확인 (`df.dtypes`)
+- ☐ 이상치/결측치 처리 여부 재확인 (`df.describe()`, `df.isnull().sum()`)
+
+---
+<br><br><br><br>
 
 # 📝 피처 제거 & 전처리 체크리스트
 
@@ -112,3 +187,9 @@ model = RandomForestRegressor()
 model.fit(X_train, y_train)
 print(model.feature_importances_)
 ```
+---
+<br><br><br><br>
+
+
+
+
