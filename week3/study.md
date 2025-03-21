@@ -37,7 +37,8 @@ header=None 컬럼명 데이터가 필요없을떄
 ### ✨ 쉽게 기억하는 팁:
 - **분류**: "어느 그룹이야?"  
 - **회귀**: "얼마야?"
----<br><br><br><br>
+---
+<br><br><br><br>
 
 
 ## 🔄 LabelEncoder vs One-Hot Encoding
@@ -72,10 +73,11 @@ df.isnull().sum()
 - ☐ **행 제거 (dropna)**
 
 ```python
-from sklearn.impute import SimpleImputer
+mean_age = df['Age'].mean()
 
-imputer = SimpleImputer(strategy='mean')  # 또는 median, most_frequent
-df[cols] = imputer.fit_transform(df[cols])
+# age 컬럼의 결측치를 평균값으로 채우기
+
+df['Age'] = df['Age'].fillna(mean_age)
 ```
 
 ---
@@ -125,7 +127,19 @@ df.select_dtypes(include='object').columns
 - ☐ **Target Encoding** (필요 시)
 
 ```python
-pd.get_dummies(df, columns=['col_name'])
+# LabelEncoder 초기화
+
+label_encoder = LabelEncoder()
+
+# 특정 컬럼만 인코딩
+
+columns_to_encode = ['Sex']  # 인코딩할 컬럼 리스트
+
+for column in columns_to_encode:
+
+    df[column] = label_encoder.fit_transform(df[column])
+
+display(df)
 ```
 
 ---
@@ -168,10 +182,17 @@ df = df.drop(columns=['ID', 'Outcome'])
 - **상관계수 0.9 이상**의 컬럼들 중 하나 제거
 
 ```python
-# 상관계수 시각화 예시
-import seaborn as sns
-corr = df.corr()
-sns.heatmap(corr, annot=True, cmap='coolwarm')
+#상관 관계 행렬
+# 0.3 이상인 경우 상관관계가 있고, 0.7이상이면 아주 높음
+
+df_corr=df.corr()
+
+#히트맵
+plt.figure(figsize=(10,10))
+sns.set(font_scale=0.8)
+sns.heatmap(df_corr, annot=True, cbar=False)
+plt.show()
+
 ```
 ### ☐ 결측치 비율이 높은 컬럼
 - 결측치가 50% 이상인 컬럼 제거 고려
