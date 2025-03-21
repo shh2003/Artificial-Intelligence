@@ -3,7 +3,7 @@
 header=None 컬럼명 데이터가 필요없을떄
 
 
-산점도 
+
 ## 🆚 넘파이 배열 vs 판다스 데이터프레임
 
 ### 🎯 정리표
@@ -70,3 +70,49 @@ header=None 컬럼명 데이터가 필요없을떄
 - **LabelEncoder**: "1, 2, 3처럼 번호를 매김"  
 - **One-Hot**: "0/1로 나누어 독립적인 컬럼으로 만듦"
 
+---
+
+# 📝 피처 제거 & 전처리 체크리스트
+
+머신러닝 프로젝트에서 피처를 제거하거나 다듬을 때 사용할 수 있는 실전 템플릿입니다.
+
+---
+
+## 🔍 1단계: 목표 정의
+- 예측할 타겟 변수(Target): `ex) BMI`
+- 모델링 목적: `ex) BMI 수치를 예측하여 건강 리스크 분석`
+
+---
+
+## ✅ 2단계: 제거할 컬럼 체크리스트
+
+### ☐ 타겟 변수와 직접적인 관계가 있는 컬럼
+- Outcome 등 타겟 변수(BMI)와 **인과관계가 있는 컬럼**은 제거  
+  ➡ 데이터 누수(Leakage) 방지
+
+### ☐ 식별자(ID) 컬럼
+- ID, 이름, 코드 등 **식별 목적으로만 사용되는 컬럼** 제거
+
+### ☐ 상관관계가 높은 컬럼
+- **상관계수 0.9 이상**의 컬럼들 중 하나 제거
+
+```python
+# 상관계수 시각화 예시
+import seaborn as sns
+corr = df.corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+```
+### ☐ 결측치 비율이 높은 컬럼
+- 결측치가 50% 이상인 컬럼 제거 고려
+➡ 필수 컬럼일 경우 평균/중앙값 대체(imputation) 또는 모델링에서 제외
+
+### ☐ 중요도가 낮은 컬럼
+- Feature Importance가 매우 낮은 컬럼 제거 가능
+```
+# 랜덤포레스트로 중요도 확인 예시
+from sklearn.ensemble import RandomForestRegressor
+
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
+print(model.feature_importances_)
+```
