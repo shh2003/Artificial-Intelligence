@@ -106,10 +106,9 @@ print((abs(z_scores) > 3).sum())
 
 ### ☐ 스케일링 적용
 ```python
-from sklearn.preprocessing import StandardScaler
-
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 ```
 
 ---
